@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> partitionLabels(string S) {
+        vector<int> lastIdx(26, 0);
+
+        for(int i=0;i<S.length(); i++)
+            lastIdx[S[i] - 'a'] = i;
+        //cout << S[1] << endl;
+        vector<int> res;
+        int i=0;
+        int prevIdx = 0;
+        while(i<S.length()){
+            int currIdx = lastIdx[S[i] - 'a'];
+
+            while(i<S.length() and i<=currIdx)
+            {
+                currIdx = max(currIdx, lastIdx[S[i]- 'a']);
+                i++;
+            }
+
+            //cout << currIdx <<" "<<S[prevIdx]<<" "<<S[currIdx]<<endl;
+            res.push_back(currIdx-prevIdx+1);
+            prevIdx = i;
+        }
+
+        return res;
+    }
+};
